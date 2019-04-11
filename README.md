@@ -9,27 +9,27 @@ Envoy proxy for gRPC as Example
 Go to YouTube-Uploader-Server and run follow command (This command bluid a dockerfile from envoy.yml):
 
 ```
-docker build -t envoy-proxy/envoy -f ./envoy.Dockerfile .
+docker build -t adempiere-grpc-proxy -f ./envoy.Dockerfile .
 ```
 Terminal output
 ```
-Sending build context to Docker daemon  113.7kB
+Sending build context to Docker daemon  7.168kB
 Step 1/3 : FROM envoyproxy/envoy:latest
- ---> 1adc524bb108
+ ---> 20b550751ccf
 Step 2/3 : COPY ./envoy.yaml /etc/envoy/envoy.yaml
- ---> 2bc1aa4f0a14
+ ---> 58ccb0ee49bd
 Step 3/3 : CMD /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
- ---> Running in e2f6746c361f
-Removing intermediate container e2f6746c361f
- ---> 3f3b15e47e32
-Successfully built 3f3b15e47e32
-Successfully tagged envoy-proxy/envoy:latest
+ ---> Running in d28779389feb
+Removing intermediate container d28779389feb
+ ---> e27ea7538138
+Successfully built e27ea7538138
+Successfully tagged adempiere-grpc-proxy:latest
 ```
 
 Run Docker for envoy proxy with follow command
 
 ```
-docker run -d -p 8080:8080 --network=host envoy-proxy/envoy
+docker run -d --network=host adempiere-grpc-proxy
 ```
 Terminal output
 
