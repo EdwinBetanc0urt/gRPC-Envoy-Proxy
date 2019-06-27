@@ -6,7 +6,7 @@ Envoy proxy for gRPC as Example
 - [Docker](https://docs.docker.com/)
 
 ### Running Envoy proxy for it:
-Go to YouTube-Uploader-Server and run follow command (This command bluid a dockerfile from envoy.yml):
+Go to gRPC-Envoy-Proxy and run follow command (This command bluid a dockerfile from envoy.yml):
 
 ```
 docker build -t adempiere-grpc-proxy -f ./envoy.Dockerfile .
