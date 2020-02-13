@@ -5,6 +5,21 @@ Envoy proxy for gRPC as Example
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Docker](https://docs.docker.com/)
 
+## Prepare YAML configuration file
+The addresses to which the servers should point in the envoy.yaml file must be changed, in the section `cluster` > `load_assignment` > `lb_endpoints` > `endpoint` > `address` > `socket_address`. There you specify the address of the host and the port where it will be accessed:
+
+```yaml
+  address:
+      socket_address:
+        # replace the 'localhost' address with your access host address
+        address: localhost
+
+        # it is the default port, unless the server port is changed it is recommended not to change
+        port_value: 50050
+```
+
+There are 4 clusters in total to Access (`access_cluster`), Dictionary (`dictionary_cluster`), Business Data (`business_data_cluster`) and Enrollment (`enrollment_cluster`), each with different ports pointed to the localhot address by default.
+
 ### Running Envoy proxy for it:
 Go to gRPC-Envoy-Proxy and run follow command (This command bluid a dockerfile from envoy.yml):
 
