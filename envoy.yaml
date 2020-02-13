@@ -195,6 +195,8 @@ static_resources:
               socket_address:
                 # replace the 'localhost' address with your access host address
                 address: localhost
+                # it is the default port, unless the server port is changed it is recommended not to change
+                # https://github.com/erpcya/adempiere-gRPC-Server/blob/master/src/main/java/org/spin/grpc/util/AccessServer.java#L128
                 port_value: 50050
 
   - name: dictionary_cluster
@@ -211,6 +213,8 @@ static_resources:
               socket_address:
                 # replace the 'localhost' address with your dictionary host address
                 address: localhost
+                # it is the default port, unless the server port is changed it is recommended not to change
+                # https://github.com/erpcya/adempiere-gRPC-Server/blob/master/src/main/java/org/spin/grpc/util/DictionaryServer.java#L128
                 port_value: 50051
 
   - name: business_data_cluster
@@ -227,6 +231,8 @@ static_resources:
               socket_address:
                 # replace the 'localhost' address with your business data host address
                 address: localhost
+                # it is the default port, unless the server port is changed it is recommended not to change
+                # https://github.com/erpcya/adempiere-gRPC-Server/blob/master/src/main/java/org/spin/grpc/util/BusinessDataServer.java#L128
                 port_value: 50052
 
   - name: enrollment_cluster
@@ -235,7 +241,7 @@ static_resources:
     http2_protocol_options: {}
     lb_policy: round_robin
     load_assignment:
-      cluster_name: business_data_cluster
+      cluster_name: enrollment_cluster
       endpoints:
       - lb_endpoints:
         - endpoint:
@@ -243,4 +249,6 @@ static_resources:
               socket_address:
                 # replace the 'localhost' address with your enrollment host address
                 address: localhost
+                # it is the default port, unless the server port is changed it is recommended not to change
+                # https://github.com/erpcya/adempiere-gRPC-Server/blob/master/src/main/java/org/spin/grpc/util/EnrollmentServer.java#L127
                 port_value: 50047
