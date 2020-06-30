@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  envoy-proxy-grpc:
+    container_name: Envoy-Proxy-gRPC
+    network_mode: host
+    build:
+      context: .
+      dockerfile: ./envoy.Dockerfile
+    labels:
+      - maintainer=EdwinBetanc0urt@outlook.com
+    stdin_open: true
+    tty: true
