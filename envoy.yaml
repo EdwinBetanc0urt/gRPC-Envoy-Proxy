@@ -22,6 +22,7 @@ admin:
       port_value: 9901
     }
 
+
 static_resources:
   listeners:
   - name: local_listener
@@ -85,6 +86,26 @@ static_resources:
                   cluster: enrollment_cluster,
                   max_grpc_timeout: 0s
                 }
+              - match: {
+                  # entry path for requests that will go to the pos server
+                  prefix: "/pos/"
+                }
+                route: {
+                  # switches the route prefix to this value
+                  prefix_rewrite: "/",
+                  cluster: pos_cluster,
+                  max_grpc_timeout: 0s
+                }
+              - match: {
+                  # entry path for requests that will go to the webstore server
+                  prefix: "/webstore/"
+                }
+                route: {
+                  # switches the route prefix to this value
+                  prefix_rewrite: "/",
+                  cluster: webstore_cluster,
+                  max_grpc_timeout: 0s
+                }
               cors:
                 allow_origin_string_match:
                   - safe_regex:
@@ -105,6 +126,7 @@ static_resources:
           - name: envoy.filters.http.grpc_web
           - name: envoy.filters.http.router
 
+
   clusters:
   - name: access_cluster
     connect_timeout: 0.25s
@@ -121,7 +143,6 @@ static_resources:
                 # replace the 'localhost' address with your access host address
                 address: localhost
                 # it is the default port, unless the server port is changed it is recommended not to change
-                # https://github.com/erpcya/adempiere-gRPC-Server/blob/master/src/main/java/org/spin/grpc/util/AccessClient.java#L134
                 port_value: 50050
 
   - name: dictionary_cluster
@@ -139,7 +160,6 @@ static_resources:
                 # replace the 'localhost' address with your dictionary host address
                 address: localhost
                 # it is the default port, unless the server port is changed it is recommended not to change
-                # https://github.com/erpcya/adempiere-gRPC-Server/blob/master/src/main/java/org/spin/grpc/util/BusinessDataClient.java#L76
                 port_value: 50051
 
   - name: business_data_cluster
@@ -157,7 +177,6 @@ static_resources:
                 # replace the 'localhost' address with your business data host address
                 address: localhost
                 # it is the default port, unless the server port is changed it is recommended not to change
-                # https://github.com/erpcya/adempiere-gRPC-Server/blob/master/src/main/java/org/spin/grpc/util/DictionaryClient.java#L83
                 port_value: 50052
 
   - name: enrollment_cluster
@@ -175,6 +194,38 @@ static_resources:
                 # replace the 'localhost' address with your enrollment host address
                 address: localhost
                 # it is the default port, unless the server port is changed it is recommended not to change
-                # https://github.com/erpcya/adempiere-gRPC-Server/blob/master/src/main/java/org/spin/grpc/util/EnrollmentClient.java#L92
-                # TODO: Chage port to 50053
-                port_value: 50047
+                port_value: 50053
+
+  - name: pos_cluster
+    connect_timeout: 0.25s
+    type: logical_dns
+    http2_protocol_options: {}
+    lb_policy: round_robin
+    load_assignment:
+      cluster_name: pos_cluster
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                # replace the 'localhost' address with your pos host address
+                address: localhost
+                # it is the default port, unless the server port is changed it is recommended not to change
+                port_value: 50054
+
+  - name: webstore_cluster
+    connect_timeout: 0.25s
+    type: logical_dns
+    http2_protocol_options: {}
+    lb_policy: round_robin
+    load_assignment:
+      cluster_name: webstore_cluster
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                # replace the 'localhost' address with your webstore host address
+                address: localhost
+                # it is the default port, unless the server port is changed it is recommended not to change
+                port_value: 50055
