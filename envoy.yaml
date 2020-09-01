@@ -87,7 +87,7 @@ static_resources:
                   max_grpc_timeout: 0s
                 }
               - match: {
-                  # entry path for requests that will go to the enrollment server
+                  # entry path for requests that will go to the pos server
                   prefix: "/pos/"
                 }
                 route: {
@@ -97,7 +97,7 @@ static_resources:
                   max_grpc_timeout: 0s
                 }
               - match: {
-                  # entry path for requests that will go to the enrollment server
+                  # entry path for requests that will go to the webstore server
                   prefix: "/webstore/"
                 }
                 route: {
@@ -208,7 +208,7 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                # replace the 'localhost' address with your enrollment host address
+                # replace the 'localhost' address with your pos host address
                 address: localhost
                 # it is the default port, unless the server port is changed it is recommended not to change
                 port_value: 50054
@@ -225,7 +225,7 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                # replace the 'localhost' address with your enrollment host address
+                # replace the 'localhost' address with your webstore host address
                 address: localhost
                 # it is the default port, unless the server port is changed it is recommended not to change
                 port_value: 50055
