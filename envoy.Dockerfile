@@ -18,6 +18,6 @@ FROM envoyproxy/envoy:v1.15.0
 
 LABEL maintainer="EdwinBetanc0urt@outlook.com"
 
-COPY ./envoy.yaml /etc/envoy/envoy.yaml
+COPY "./envoy.yaml" "./cert/localhost-cert.pem" "./cert/localhost-key.pem" "/etc/envoy/"
 
 CMD /usr/local/bin/envoy -c /etc/envoy/envoy.yaml

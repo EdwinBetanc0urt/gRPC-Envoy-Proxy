@@ -30,8 +30,8 @@ docker build -t adempiere-grpc-proxy -f ./envoy.Dockerfile .
 Terminal output
 ```
 Sending build context to Docker daemon  120.3kB
-Step 1/3 : FROM envoyproxy/envoy:latest
-latest: Pulling from envoyproxy/envoy
+Step 1/4 : FROM envoyproxy/envoy:v1.15.0
+v1.15.0: Pulling from envoyproxy/envoy
 e80174c8b43b: Pull complete
 d1072db285cc: Pull complete
 858453671e67: Pull complete
@@ -43,10 +43,12 @@ f3c50b037f2f: Pull complete
 149d66218a49: Pull complete
 Digest: sha256:80d260d17d39926e5d405713d59e2d98f0aa1b63936f54c9b471a2f39656b6e4
 Status: Downloaded newer image for envoyproxy/envoy:latest
- ---> 56683ef746a8
-Step 2/3 : COPY ./envoy.yaml /etc/envoy/envoy.yaml
- ---> e108a72bace1
-Step 3/3 : CMD /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
+ ---> 3f5f11e23883
+Step 2/4 : LABEL maintainer="EdwinBetanc0urt@outlook.com"
+ ---> 4dddfde94a47
+Step 3/4 : COPY "./envoy.yaml" "./cert/localhost-cert.pem" "./cert/localhost-key.pem" "/etc/envoy/"
+ ---> 5c61ba6c0d14
+Step 4/4 : CMD /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
  ---> Running in b9e4509ab6d8
 Removing intermediate container b9e4509ab6d8
  ---> e764a11e4c4a
@@ -56,7 +58,11 @@ Successfully tagged adempiere-grpc-proxy:latest
 
 Run Docker for envoy proxy with follow command
 ```
-docker run -d --name ADempiere-gRPC-Proxy --network=host adempiere-grpc-proxy
+docker run -d -it \
+  --name ADempiere-gRPC-Proxy \
+  --network=host \
+  -v $(pwd)/envoy.yaml:/etc/envoy/envoy.yaml \
+  adempiere-grpc-proxy
 ```
 
 Terminal output
@@ -81,8 +87,8 @@ docker-compose up
 Terminal output:
 ```
 Building envoy-proxy-grpc
-Step 1/4 : FROM envoyproxy/envoy:v1.14.2
-v1.14.2: Pulling from envoyproxy/envoy
+Step 1/4 : FROM envoyproxy/envoy:v1.15.0
+v1.15.0: Pulling from envoyproxy/envoy
 e92ed755c008: Pull complete
 b9fd7cb1ff8f: Pull complete
 ee690f2d57a1: Pull complete
@@ -93,13 +99,13 @@ d7c9afc40f7e: Pull complete
 0546561da879: Pull complete
 539a2f535067: Pull complete
 Digest: sha256:47a5ea1e6edb20fee16678670c29b489ebbf1187e411662056be7a4518ee6cdd
-Status: Downloaded newer image for envoyproxy/envoy:v1.14.2
+Status: Downloaded newer image for envoyproxy/envoy:v1.15.0
  ---> 9071be9bc679
 Step 2/4 : LABEL maintainer="EdwinBetanc0urt@outlook.com"
  ---> Running in bfba7aa03eb3
 Removing intermediate container bfba7aa03eb3
  ---> e0ee31e66cc3
-Step 3/4 : COPY ./envoy.yaml /etc/envoy/envoy.yaml
+Step 3/4 : COPY "./envoy.yaml" "./cert/localhost-cert.pem" "./cert/localhost-key.pem" "/etc/envoy/"
  ---> 714cd4d50049
 Step 4/4 : CMD /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
  ---> Running in 4b40a80bdeb9
