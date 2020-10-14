@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.            #
 #####################################################################################
 
-FROM envoyproxy/envoy:v1.15.0
+FROM envoyproxy/envoy:v1.16.0
 
 LABEL maintainer="EdwinBetanc0urt@outlook.com"
 
