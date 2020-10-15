@@ -29,30 +29,33 @@ docker build -t adempiere-grpc-proxy -f ./envoy.Dockerfile .
 
 Terminal output
 ```
-Sending build context to Docker daemon  120.3kB
-Step 1/4 : FROM envoyproxy/envoy:v1.15.0
-v1.15.0: Pulling from envoyproxy/envoy
-e80174c8b43b: Pull complete
-d1072db285cc: Pull complete
-858453671e67: Pull complete
-3d07b1124f98: Pull complete
-990fbe3093cb: Pull complete
-4da8686dffe3: Pull complete
-b816b805e1d5: Pull complete
-f3c50b037f2f: Pull complete
-149d66218a49: Pull complete
-Digest: sha256:80d260d17d39926e5d405713d59e2d98f0aa1b63936f54c9b471a2f39656b6e4
-Status: Downloaded newer image for envoyproxy/envoy:latest
- ---> 3f5f11e23883
+Sending build context to Docker daemon  238.1kB
+Step 1/4 : FROM envoyproxy/envoy:v1.16.0
+v1.16.0: Pulling from envoyproxy/envoy
+171857c49d0f: Pull complete
+419640447d26: Pull complete
+61e52f862619: Pull complete
+568f6e4d47db: Pull complete
+c03261803dd9: Pull complete
+fe52d4ba2edd: Pull complete
+54e5dc37f029: Pull complete
+1e918d808c1e: Pull complete
+68a45b97a75d: Pull complete
+46f21af565d3: Pull complete
+Digest: sha256:9e72bbba48041223ccf79ba81754b1bd84a67c6a1db8a9dbff77ea6fc1cb04ea
+Status: Downloaded newer image for envoyproxy/envoy:v1.16.0
+ ---> a438abf4c3fd
 Step 2/4 : LABEL maintainer="EdwinBetanc0urt@outlook.com"
- ---> 4dddfde94a47
+ ---> Running in a0a163baeea7
+Removing intermediate container a0a163baeea7
+ ---> 45e63df5fe4a
 Step 3/4 : COPY "./envoy.yaml" "./cert/localhost-cert.pem" "./cert/localhost-key.pem" "/etc/envoy/"
- ---> 5c61ba6c0d14
+ ---> d7f32dfb2a93
 Step 4/4 : CMD /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
- ---> Running in b9e4509ab6d8
-Removing intermediate container b9e4509ab6d8
- ---> e764a11e4c4a
-Successfully built e764a11e4c4a
+ ---> Running in 31693017aa2b
+Removing intermediate container 31693017aa2b
+ ---> 8e80364d9ed1
+Successfully built 8e80364d9ed1
 Successfully tagged adempiere-grpc-proxy:latest
 ```
 
@@ -61,20 +64,20 @@ Run Docker for envoy proxy with follow command
 docker run -d -it \
   --name ADempiere-gRPC-Proxy \
   --network=host \
-  -v $(pwd)/envoy.yaml:/etc/envoy/envoy.yaml \
+	-v $(pwd)/envoy.yaml:/etc/envoy/envoy.yaml \
   adempiere-grpc-proxy
 ```
 
 Terminal output
 ```
-26f674f5a8ceb86c0e26113c51e394b80fd08a4baf52ec9303aef239c2a481bf
+5a5b60c256a75ace66dbaea37bf855945df2d784b2525b94bbd0f38c683d0b3f
 ```
 
 Verify if is Running
 ```
 docker ps
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                    NAMES
-ce998664e7a7        adempiere-grpc-proxy   "/docker-entrypoint.…"   5 seconds ago      Up 4 seconds                                ADempiere-gRPC-Proxy
+19066ca455ce        adempiere-grpc-proxy   "/docker-entrypoint.…"   5 seconds ago      Up 4 seconds                                ADempiere-gRPC-Proxy
 ```
 
 ### Running Envoy proxy with docker-compose:
@@ -87,8 +90,8 @@ docker-compose up
 Terminal output:
 ```
 Building envoy-proxy-grpc
-Step 1/4 : FROM envoyproxy/envoy:v1.15.0
-v1.15.0: Pulling from envoyproxy/envoy
+Step 1/4 : FROM envoyproxy/envoy:v1.16.0
+v1.16.0: Pulling from envoyproxy/envoy
 e92ed755c008: Pull complete
 b9fd7cb1ff8f: Pull complete
 ee690f2d57a1: Pull complete
